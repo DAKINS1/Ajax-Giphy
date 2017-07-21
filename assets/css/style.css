@@ -1,28 +1,20 @@
-.header {
-    text-align: center;
+img {
     width: 100%;
-    margin-bottom
 }
 
-#pixarView,
-#buttonView {
+
+.header {
     text-align: center;
-    margin: 20px;
 }
 
 #addPixar {
-    text-align: center;
-    margin: 20px;
-    font-color: black;
+    margin: 10px;
 }
 
+#pixarView,
+#buttonView,
 .pixar-form {
     text-align: center;
-
-}
-
-.addPixar {
-    font-color: black;
 }
 
 .pixar,
@@ -31,4 +23,5 @@ form,
 input {
       margin: 2px;
 }
+
 
