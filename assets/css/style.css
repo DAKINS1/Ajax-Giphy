@@ -25,3 +25,14 @@ input {
 }
 
 
+.main-container {
+    margin-left: 200px;
+}
+
+
+@media only screen and (max-width: 945px) {
+ .main-container {
+    margin-left: 0px;
+
+}
+}

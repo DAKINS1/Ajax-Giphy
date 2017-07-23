@@ -1,27 +1,34 @@
 
 $(document).ready(function() {
 //Initial array of Pixar characters
-var pixars = ["Carl Fredricksen", "Dory", "Edna Mode", "Wall-E", "Sully", "Buzz Lightyear"];
+
+var onClick = function() {
+    console.log("worked!");
+};
+
+var pixars = ["CARL FREDRICKSEN", "DORY", "EDNA MODE", "WALL-E", "SULLY", "BUZZ LIGHTYEAR"];
+
+var deleteCandidate;
 
 //displayPixarInfo function re-renders the HTML to display the appropriate content
 function displayPixarInfo() {
-
 var pixar = $(this).attr("data-name");
+// pixarArray.push(pixar);
 var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + pixar + "&api_key=32d6554f7a0f44bbae84e6da0781d34f&limit=10";
-
+// console.log(pixarArray);
 //Creating an AJAX call for the specific movie button being clicked
 $.ajax({
   url: queryURL,
   method: "GET"
 }).done(function(response) {
   var results = response.data;
-  console.log(results);
+  // console.log(results);
 //clears the mainArea for next search result. stackoverflow.com/questions/44687331
   $("#main").html('');
 //looping through the 10 response (results)
   for (var i = 0; i < results.length; i++) {
 //creating the div to hold the pixarimage and holding the info in variable pixarDiv
-    var pixarDiv = $("<div class='col-md-4'>");
+    var pixarDiv = $("<div class='col-md-2'>");
 //creating a variable to hold hte rating response from giphy.com
     var rating = results[i].rating;
 //creating a variable to hold the fixed height url of the image from giphy.com
@@ -48,6 +55,7 @@ $.ajax({
     pixarDiv.append(pixarImg);
 //prepending the images in the main area of the html
     $("#main").prepend(pixarDiv);
+    // console.log(pixarArray);
     }
   });
 }
@@ -60,6 +68,7 @@ function renderButtons() {
   $("#buttonView").empty();
 // Looping through the array of pixar characters in the array
   for (var i = 0; i < pixars.length; i++) {
+    console.log("rendering...", i);
 // Then dynamicaly generating buttons for each pixar in the array
 // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
     var a = $('<button class= "btn btn-primary">');
@@ -72,14 +81,21 @@ function renderButtons() {
 // Adding the button to the buttons-view div
     $("#buttonView").append(a);
     }
-}
+
+};
+
+$("#buttonView").on("click", ".pixar", function() {
+deleteCandidate = $(this);
+console.log("a button clicked ", deleteCandidate);
+});
 
 // This function handles events where a search button is clicked
 $("#addPixar").on("click", function(event) {
   event.preventDefault();
 // This line grabs the input from the textbox
-  var pixar = $("#pixar-input").val().trim();
-
+  var pix = $("#pixar-input").val().trim();
+  var pixar = pix.toUpperCase();
+console.log(pixar); //this console logs the input entered in search box
 //if no text entered in search field, this prevents a blank button being appended, or
 //if the same search is entered, this prevents a duplicate button
   if ((pixar === "") || (pixars.indexOf(pixar) >= 0)) {
@@ -87,12 +103,16 @@ $("#addPixar").on("click", function(event) {
     console.log("please enter text");
   } else {
 // Adding pixar textinput from the textbox to our pixars array
-  pixars.push(pixar);
+  pixars.push(pixar);}
 //clears the search box
   $("#pixar-input").val(" ");
-// Calling renderButtons which handles the processing of our movie array
+// Calling renderButtons which handles the processing of our array
   renderButtons();
-  }
+});
+
+$("#removePixar").on("click", function() {
+console.log("removing...");
+deleteCandidate.remove();
 });
 
 
@@ -120,5 +140,9 @@ $(document).on("click", ".pixarGif", stateOfGifs);
 renderButtons();
 
 });
+
+//To do:
+//activate remove button to only the button selected, not all.
+
 
 
