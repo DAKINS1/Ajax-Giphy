@@ -2,10 +2,6 @@
 $(document).ready(function() {
 //Initial array of Pixar characters
 
-var onClick = function() {
-    console.log("worked!");
-};
-
 var pixars = ["CARL FREDRICKSEN", "DORY", "EDNA MODE", "WALL-E", "SULLY", "BUZZ LIGHTYEAR"];
 
 var deleteCandidate;
@@ -60,8 +56,6 @@ $.ajax({
   });
 }
 
-
-
 // Function for displaying data
 function renderButtons() {
 // (this is necessary otherwise you will have repeat buttons)
@@ -81,10 +75,11 @@ function renderButtons() {
 // Adding the button to the buttons-view div
     $("#buttonView").append(a);
     }
-
 };
 
-$("#buttonView").on("click", ".pixar", function() {
+//This function handles event when a button is clicked, it is stored in deleteCandidate variable.
+$("#buttonView").on("click", ".pixar", function(e) {
+  e.preventDefault();
 deleteCandidate = $(this);
 console.log("a button clicked ", deleteCandidate);
 });
@@ -110,7 +105,9 @@ console.log(pixar); //this console logs the input entered in search box
   renderButtons();
 });
 
-$("#removePixar").on("click", function() {
+//This function deletes the button held in the deleteCandidate variable with the Delete button.
+$("#removePixar").on("click", function(e) {
+   e.preventDefault();
 console.log("removing...");
 deleteCandidate.remove();
 });
@@ -141,8 +138,11 @@ renderButtons();
 
 });
 
-//To do:
-//activate remove button to only the button selected, not all.
+//BUG FIX to do's:
+
+//able to submit using enter button,
+//enter button with no text deletes buttons
+
 
 
 
